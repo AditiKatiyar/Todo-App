@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.aditi.todo.TodoDetailActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:gravity="right"
+        android:paddingRight="20dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/dateText"
+        android:textColor="@color/colorAccent"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/titleText"
+        android:hint="Title"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/edittext_modified_states"
+        android:padding="10dp"
+        android:textColor="@color/lightGrey"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/categoryText"
+        android:hint="Category"
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_modified_states"
+        android:padding="10dp"
+        android:textColor="@color/lightGrey"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/descriptionText"
+        android:hint="Description"
+        android:layout_gravity="top|left"
+        android:scrollbars="vertical"
+        android:inputType="textMultiLine"
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_modified_states"
+        android:padding="10dp"
+        android:lines="8"
+        android:minLines="1"
+        android:gravity="top|left"
+        android:maxLines="10"
+        android:textColor="@color/lightGrey"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/deadlineText"
+        android:background="@drawable/textview_modified_states"
+        android:hint="Deadline"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/lightGrey"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="bottom">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textSize="20dp"
+            android:id="@+id/OKbutton"
+            android:background="@drawable/button_image"
+            android:textColor="@color/white"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>
