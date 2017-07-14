@@ -23,7 +23,15 @@
                 android:layout_height="wrap_content"
                 android:text="My Todos"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24dp"
+                android:layout_marginTop="8dp"/>
+
+            <android.support.v7.widget.SearchView
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchView">
+
+            </android.support.v7.widget.SearchView>
 
         </android.support.v7.widget.Toolbar>
 

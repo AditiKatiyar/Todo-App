@@ -8,7 +8,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -111,6 +114,10 @@ public class TodoDetailActivity extends AppCompatActivity {
                 TodoDetailActivity.this.finish();
             }
         });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     public void showDatePicker(Context context, int initialYear, int initialMonth, int initialDay) {
@@ -190,5 +197,20 @@ public class TodoDetailActivity extends AppCompatActivity {
     {
         database.insert(TodoOpenHelper.TODO_TABLE_NAME, null, cv);
         setResult(RESULT_OK);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.todo_detail_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.set_alarm)
+        {
+
+        }
+        return true;
     }
 }
