@@ -19,6 +19,9 @@ import java.util.Locale;
  * Created by Aditi on 6/28/2017.
  */
 
+
+// filter function is at the end, searchView is in acitivty_main.xml*******************
+
 public class TodoArrayAdapter extends ArrayAdapter<Todo> {
 
     ArrayList<Todo> todoArrayList;
@@ -80,6 +83,7 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
         return convertView;
     }
 
+    // to filter todos
     public void filter(String searchText)
     {
         todoArrayList.clear();

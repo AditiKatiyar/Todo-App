@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         todoArrayAdapter = new TodoArrayAdapter(this, todoList);
         listView.setAdapter(todoArrayAdapter);
 
+        // setting item long click listener for deleting it
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -92,10 +93,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // toolbar fetched from layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+
+        // search view fetched from layout
         SearchView searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -113,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         updateTodoList();
     }
 
+    // update todo list
     private void updateTodoList() {
 
         TodoOpenHelper todoOpenHelper = TodoOpenHelper.getTodoOpenHelperInstance(MainActivity.this);
@@ -139,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         todoArrayAdapter.notifyDataSetChanged();
     }
 
+    // creating menu to add an sort todos by title, category, deadline
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -171,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // updating the todoList when a todo is added in another activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == NEW_TODO)
