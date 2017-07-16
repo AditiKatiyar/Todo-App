@@ -14,16 +14,18 @@ public class Todo implements Serializable {
     String description;
     long date;
     long deadline;
-    boolean done;
-    boolean deadlinePassed;
+    int done;
+    int deadlinePassed;
 
-    public Todo(String title, String category, String description, int id, long date, long deadline) {
+    public Todo(String title, String category, String description, int id, long date, long deadline, int deadlinePassed, int done) {
         this.title = title;
         this.category = category;
         this.description = description;
         this.id = id;
         this.date = date;
         this.deadline = deadline;
+        this.deadlinePassed = deadlinePassed;
+        this.done = done;
     }
 
     public static Comparator<Todo> byTitle = new Comparator<Todo>() {

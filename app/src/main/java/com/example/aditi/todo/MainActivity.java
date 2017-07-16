@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -117,7 +119,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent i = new Intent(MainActivity.this, TodoDetailActivity.class);
+                startActivityForResult(i, NEW_TODO);
+            }
+        });
         updateTodoList();
     }
 
@@ -133,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
         int idIndex = cursor.getColumnIndex(TodoOpenHelper.TODO_ID);
         int dateIndex = cursor.getColumnIndex(TodoOpenHelper.TODO_DATE);
         int deadlineIndex = cursor.getColumnIndex(TodoOpenHelper.TODO_DEADLINE);
+        int deadlinePassedIndex = cursor.getColumnIndex(TodoOpenHelper.TODO_DEADLINE_PASSED);
+        int doneIndex = cursor.getColumnIndex(TodoOpenHelper.TODO_DONE);
         while(cursor.moveToNext())
         {
             String title = cursor.getString(titleIndex);
@@ -141,7 +153,9 @@ public class MainActivity extends AppCompatActivity {
             int _id = cursor.getInt(idIndex);
             long date = cursor.getLong(dateIndex);
             long deadline = cursor.getLong(deadlineIndex);
-            Todo todo = new Todo(title, category, description, _id, date, deadline);
+            int deadlinePassed = cursor.getInt(deadlinePassedIndex);
+            int done = cursor.getInt(doneIndex);
+            Todo todo = new Todo(title, category, description, _id, date, deadline, deadlinePassed, done);
             todoList.add(todo);
         }
 
@@ -158,12 +172,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.add)
+        /*if(id == R.id.add)
         {
-            Intent i = new Intent(this, TodoDetailActivity.class);
-            startActivityForResult(i, NEW_TODO);
+
         }
-        else if (id == R.id.sortByTitle)
+        else*/ if (id == R.id.sortByTitle)
         {
             Collections.sort(todoList, Todo.byTitle);
             todoArrayAdapter.notifyDataSetChanged();
@@ -199,7 +212,9 @@ public class MainActivity extends AppCompatActivity {
                 int _id = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_ID));
                 long date = cursor.getLong(cursor.getColumnIndex(TodoOpenHelper.TODO_DATE));
                 long deadline = cursor.getLong(cursor.getColumnIndex(TodoOpenHelper.TODO_DEADLINE));
-                Todo todo = new Todo(title, category, description, _id, date, deadline);
+                int deadlinePassed = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_DEADLINE_PASSED));
+                int done = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_DONE));
+                Todo todo = new Todo(title, category, description, _id, date, deadline, deadlinePassed, done);
                 todoList.add(todo);
                 todoArrayAdapter.notifyDataSetChanged();
             }
@@ -230,7 +245,9 @@ public class MainActivity extends AppCompatActivity {
                     int _id = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_ID));
                     long date = cursor.getLong(cursor.getColumnIndex(TodoOpenHelper.TODO_DATE));
                     long deadline = cursor.getLong(cursor.getColumnIndex(TodoOpenHelper.TODO_DEADLINE));
-                    Todo todo = new Todo(title, category, description, _id, date, deadline);
+                    int deadlinePassed = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_DEADLINE_PASSED));
+                    int done = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_DONE));
+                    Todo todo = new Todo(title, category, description, _id, date, deadline, deadlinePassed, done);
                     todoList.set(Integer.parseInt(data.getStringExtra(IntentConstants.POSITION)), todo);
                     todoArrayAdapter.notifyDataSetChanged();
                 }

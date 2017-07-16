@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -50,12 +51,14 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
         TextView categoryTextView;
         TextView descriptionTextView;
         TextView dateTextView;
+        ImageView imageView;
 
-        public TodoViewHolder(TextView titleTextView, TextView categoryTextView, TextView descriptionTextView, TextView dateTextView) {
+        public TodoViewHolder(TextView titleTextView, TextView categoryTextView, TextView descriptionTextView, TextView dateTextView, ImageView imageView) {
             this.titleTextView = titleTextView;
             this.categoryTextView = categoryTextView;
             this.descriptionTextView = descriptionTextView;
             this.dateTextView = dateTextView;
+            this.imageView = imageView;
         }
     }
 
@@ -69,7 +72,8 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
             TextView categoryTV = (TextView) convertView.findViewById(R.id.categoryTextView);
             TextView descriptionTV = (TextView) convertView.findViewById(R.id.descriptionTextView);
             TextView dateTV = (TextView) convertView.findViewById(R.id.dateTextView);
-            TodoViewHolder todoViewHolder = new TodoViewHolder(titleTV, categoryTV, descriptionTV, dateTV);
+            ImageView imageV = (ImageView) convertView.findViewById(R.id.image_view);
+            TodoViewHolder todoViewHolder = new TodoViewHolder(titleTV, categoryTV, descriptionTV, dateTV, imageV);
             convertView.setTag(todoViewHolder);
         }
 
@@ -87,6 +91,23 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
         format.getTimeZone();
         String text = format.format(date);
         todoViewHolder.dateTextView.setText(text);
+        int deadlinePassed = todo.deadlinePassed;
+        int done = todo.done;
+        if (deadlinePassed == 1)
+        {
+            if (done == 1)
+            {
+                todoViewHolder.imageView.setBackgroundResource(R.drawable.tick);
+            }
+            else
+            {
+                todoViewHolder.imageView.setBackgroundResource(R.drawable.cross);
+            }
+        }
+        else
+        {
+            todoViewHolder.imageView.setMaxWidth(0);
+        }
 
         return convertView;
     }

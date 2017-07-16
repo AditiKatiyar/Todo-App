@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.aditi.todo.AfterAlarmActivity"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:textColor="@color/white"
+                android:id="@+id/title_text"/>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category:"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_modified_states"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/lightGrey"
+        android:id="@+id/category_text"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description:"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_modified_states"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/lightGrey"
+        android:id="@+id/description_text"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingBottom="100dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DONE"
+            android:id="@+id/done_button"
+            android:textColor="@color/white"
+            android:background="@drawable/button_image"
+            android:layout_marginRight="20dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NOT DONE"
+            android:id="@+id/not_done"
+            android:textColor="@color/white"
+            android:background="@drawable/button_image"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

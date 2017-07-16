@@ -16,6 +16,8 @@ public class TodoOpenHelper extends SQLiteOpenHelper {
     public final static String TODO_ID = "_id";
     public final static String TODO_DATE = "Date";
     public final static String TODO_DEADLINE = "deadline";
+    public final static String TODO_DEADLINE_PASSED = "deadlinePassed";
+    public final static String TODO_DONE = "done";
     public static TodoOpenHelper todoOpenHelper;
 
     public static TodoOpenHelper getTodoOpenHelperInstance(Context context)
@@ -33,7 +35,7 @@ public class TodoOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String query = "create table " + TODO_TABLE_NAME + " ( " + TODO_ID + " integer primary key autoincrement, " +
                 TODO_TITLE + " text, " + TODO_CATEGORY + " text, " + TODO_DESCRIPTION + " text, " + TODO_DATE +
-        " integer, " + TODO_DEADLINE + " integer );";
+        " integer, " + TODO_DEADLINE + " integer, " + TODO_DEADLINE_PASSED + " integer, " + TODO_DONE + " integer );";
         db.execSQL(query);
     }
 

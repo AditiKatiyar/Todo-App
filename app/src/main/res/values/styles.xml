@@ -20,8 +20,8 @@
         <item name="android:actionMenuTextColor">#000000</item>
     </style>
 
-    <style name="whiteTheme" parent="Base.Widget.AppCompat.Spinner">
-        <item name="android:textColorPrimary">@color/white</item>
-    </style>
+    <!--<style name="whiteTheme" parent="Widget.Design.FloatingActionButton">
+        <item name="android:colorAccent">@color/white</item>
+    </style>-->
 
 </resources>

@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -35,12 +36,17 @@ public class TodoDetailActivity extends AppCompatActivity {
     EditText descriptionText;
     TextView deadlineText;
     TextView dateText;
+    TextView statusText;
+    ImageView imageView;
     TodoOpenHelper todoOpenHelper;
     SQLiteDatabase database;
     String Position;
     Calendar mCalendar;
     long deadlineTime = 0;
     long uniqueId = 0;
+    int deadlinePassed = 0;
+    int done = 0;
+    boolean alarmSet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,8 @@ public class TodoDetailActivity extends AppCompatActivity {
         descriptionText = (EditText) findViewById(R.id.descriptionText);
         dateText = (TextView) findViewById(R.id.dateText);
         deadlineText = (TextView) findViewById(R.id.deadlineText);
+        imageView = (ImageView) findViewById(R.id.image);
+        statusText = (TextView) findViewById(R.id.statusText);
         /*deadlineText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +116,8 @@ public class TodoDetailActivity extends AppCompatActivity {
                 long date = System.currentTimeMillis();
                 cv.put(TodoOpenHelper.TODO_DATE, date);
                 cv.put(TodoOpenHelper.TODO_DEADLINE, deadlineTime);
+                cv.put(TodoOpenHelper.TODO_DEADLINE_PASSED, deadlinePassed);
+                cv.put(TodoOpenHelper.TODO_DONE, done);
 
                 if (idString == -1) // add new
                 {
@@ -118,14 +128,16 @@ public class TodoDetailActivity extends AppCompatActivity {
                     updateTodo(cv, idString);
                 }
 
-                if (deadlineTime != 0)
+                if (alarmSet && deadlineTime != 0)
                 {
                     // setting alarm
                     AlarmManager am = (AlarmManager) TodoDetailActivity.this.getSystemService(Context.ALARM_SERVICE);
                     Intent i = new Intent(TodoDetailActivity.this, AlarmReceiver.class);
-                    i.putExtra(IntentConstants.TITLE, title);
+                    /*i.putExtra(IntentConstants.TITLE, title);
                     i.putExtra(IntentConstants.CATEGORY, category);
-                    i.putExtra(IntentConstants.ID, uniqueId);
+                    i.putExtra(IntentConstants.ID, uniqueId);*/
+                    Todo todo = new Todo(title, category, description, (int) uniqueId, date, deadlineTime, deadlinePassed, done);
+                    i.putExtra(IntentConstants.OBJECT, todo);
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(TodoDetailActivity.this, (int) uniqueId, i, 0);
                     am.set(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(), pendingIntent);
                 }
@@ -201,6 +213,21 @@ public class TodoDetailActivity extends AppCompatActivity {
             deadlineText.setText("Deadline : " + mCalendar.get(Calendar.DAY_OF_MONTH) + "/" + mCalendar.get(Calendar.MONTH)
                     + "/" + mCalendar.get(Calendar.YEAR) + " at " + time);
         }
+        deadlinePassed = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_DEADLINE_PASSED));
+        done = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_DONE));
+        if (deadlinePassed == 1)
+        {
+            if (done == 1)
+            {
+                statusText.setText("Done!");
+                imageView.setBackgroundResource(R.drawable.tick);
+            }
+            else
+            {
+                statusText.setText("Not Done!");
+                imageView.setBackgroundResource(R.drawable.cross);
+            }
+        }
         cursor.close();
     }
 
@@ -225,12 +252,27 @@ public class TodoDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.set_alarm)
+        int itemId = item.getItemId();
+        if (itemId == R.id.set_alarm)
         {
             Intent intent = new Intent(this, SetAlarm.class);
             intent.putExtra(IntentConstants.TITLE, titleText.getText());
             intent.putExtra(IntentConstants.DEADLINE, deadlineTime);
             startActivityForResult(intent, IntentConstants.SET_ALARM);
+        }
+        else if (itemId == R.id.mark_as_done)
+        {
+            imageView.setBackgroundResource(R.drawable.tick);
+            statusText.setText("Done!");
+            done = 1;
+            deadlinePassed = 1;
+        }
+        else if (itemId == R.id.mark_as_not_done)
+        {
+            imageView.setBackgroundResource(R.drawable.cross);
+            statusText.setText("Not Done!");
+            done = 0;
+            deadlinePassed = 1;
         }
         return true;
     }
@@ -246,6 +288,7 @@ public class TodoDetailActivity extends AppCompatActivity {
             String time = mSimpleDateFormat.format(mCalendar.getTime());
             deadlineText.setText("Deadline : " + mCalendar.get(Calendar.DAY_OF_MONTH) + "/" + mCalendar.get(Calendar.MONTH)
                     + "/" + mCalendar.get(Calendar.YEAR) + " at " + time);
+            alarmSet = true;
         }
     }
 }

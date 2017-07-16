@@ -16,18 +16,25 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast.
+
+        Todo todo = (Todo) intent.getSerializableExtra(IntentConstants.OBJECT);
+
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.notification)
                 .setContentTitle("My Todos : Reminder!")
                 .setAutoCancel(true)
-                .setContentText(intent.getStringExtra(IntentConstants.TITLE) + " (" + intent.getStringExtra(IntentConstants.CATEGORY) + ")" )
-                .setColor(ContextCompat.getColor(context, R.color.lighterBlue));
+                .setContentText(todo.title + " (" + todo.category + ")")
+                .setColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
-        int uniqueId = (int) intent.getLongExtra(IntentConstants.ID, 0);
-        Intent resultIntent = new Intent(context, MainActivity.class);
+        /*int uniqueId = (int) intent.getLongExtra(IntentConstants.ID, 0);*/
+
+        int uniqueId = todo.id;
+        Intent resultIntent = new Intent(context, AfterAlarmActivity.class);
+        resultIntent.putExtra(IntentConstants.OBJECT, todo);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(context, uniqueId, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         nBuilder.setContentIntent(resultPendingIntent);
         NotificationManager nNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nNotificationManager.notify(uniqueId, nBuilder.build());
     }
 }
+/*.setContentText(intent.getStringExtra(IntentConstants.TITLE) + " (" + intent.getStringExtra(IntentConstants.CATEGORY) + ")" )*/

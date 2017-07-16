@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:title="Set Alarm"
-        android:id="@+id/set_alarm"
-        app:showAsAction="always"></item>
+        android:id="@+id/set_alarm"></item>
+
+    <item android:title="Mark as Done"
+        android:id="@+id/mark_as_done"></item>
+
+    <item android:title="Mark as Not Done"
+        android:id="@+id/mark_as_not_done"></item>
 
 </menu>

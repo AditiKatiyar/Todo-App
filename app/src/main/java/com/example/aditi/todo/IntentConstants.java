@@ -12,6 +12,7 @@ public class IntentConstants {
     public final static String DESCRIPTION = "description";
     public final static String POSITION = "position";
     public final static String DEADLINE = "deadline";
+    public final static String OBJECT = "object";
 
     public static final int SET_ALARM = 1;
     public static final String ALARM_TIME_IN_EPOCH = "alarmTimeInEpoch";
