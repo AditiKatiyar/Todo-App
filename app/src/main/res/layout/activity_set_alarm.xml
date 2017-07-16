@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.aditi.todo.SetAlarm"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/toolbar"
+            app:theme="@style/toolbarTheme"
+            android:titleTextColor="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Alarm"
+                android:textColor="@color/white"
+                android:textSize="24dp"
+                android:layout_marginTop="8dp"/>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Enter Date"
+        android:id="@+id/date_tv"
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_modified_states"
+        android:padding="10dp"
+        android:textColor="@color/lightGrey"
+        android:textSize="18dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Time"
+        android:id="@+id/time_tv"
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_modified_states"
+        android:padding="10dp"
+        android:textColor="@color/lightGrey"
+        android:textSize="18dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="bottom">
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="SET ALARM"
+            android:background="@drawable/button_image"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/set_alarm_button"/>
+
+    </LinearLayout>
+
+</LinearLayout>

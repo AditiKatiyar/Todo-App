@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">My Todos</string>
+    <string-array name="spinner_items">
+        <item name="byTitle">By Title</item>
+        <item name="byCategory">By Category</item>
+        <item name="byDeadline">By Deadline</item>
+    </string-array>
 </resources>

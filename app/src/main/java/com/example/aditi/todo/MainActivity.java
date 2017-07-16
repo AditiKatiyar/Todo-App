@@ -16,7 +16,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
 
         updateTodoList();
     }

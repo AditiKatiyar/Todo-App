@@ -1,6 +1,8 @@
 package com.example.aditi.todo;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 public class TodoDetailActivity extends AppCompatActivity {
 
@@ -35,8 +38,9 @@ public class TodoDetailActivity extends AppCompatActivity {
     TodoOpenHelper todoOpenHelper;
     SQLiteDatabase database;
     String Position;
-
+    Calendar mCalendar;
     long deadlineTime = 0;
+    long uniqueId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         descriptionText = (EditText) findViewById(R.id.descriptionText);
         dateText = (TextView) findViewById(R.id.dateText);
         deadlineText = (TextView) findViewById(R.id.deadlineText);
-        deadlineText.setOnClickListener(new View.OnClickListener() {
+        /*deadlineText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar newCalendar = Calendar.getInstance();
@@ -61,7 +65,7 @@ public class TodoDetailActivity extends AppCompatActivity {
                 int day = newCalendar.get(Calendar.DAY_OF_MONTH);
                 showDatePicker(TodoDetailActivity.this, year, month, day);
             }
-        });
+        });*/
         Button OKButton = (Button) findViewById(R.id.OKbutton);
 
         Intent intent = getIntent();
@@ -70,9 +74,11 @@ public class TodoDetailActivity extends AppCompatActivity {
         todoOpenHelper = TodoOpenHelper.getTodoOpenHelperInstance(TodoDetailActivity.this);
         database = todoOpenHelper.getWritableDatabase();
 
+        // if todo is already in database
         if (idString != -1)
         {
             fillEditTextViews(idString);
+            uniqueId = idString;
         }
 
         OKButton.setOnClickListener(new View.OnClickListener() {
@@ -105,12 +111,25 @@ public class TodoDetailActivity extends AppCompatActivity {
 
                 if (idString == -1) // add new
                 {
-                    insertTodo(cv);
+                    uniqueId = insertTodo(cv);
                 }
                 else    // update existing todo
                 {
                     updateTodo(cv, idString);
                 }
+
+                if (deadlineTime != 0)
+                {
+                    // setting alarm
+                    AlarmManager am = (AlarmManager) TodoDetailActivity.this.getSystemService(Context.ALARM_SERVICE);
+                    Intent i = new Intent(TodoDetailActivity.this, AlarmReceiver.class);
+                    i.putExtra(IntentConstants.TITLE, title);
+                    i.putExtra(IntentConstants.CATEGORY, category);
+                    i.putExtra(IntentConstants.ID, uniqueId);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(TodoDetailActivity.this, (int) uniqueId, i, 0);
+                    am.set(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(), pendingIntent);
+                }
+
                 TodoDetailActivity.this.finish();
             }
         });
@@ -120,7 +139,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-    public void showDatePicker(Context context, int initialYear, int initialMonth, int initialDay) {
+    /*public void showDatePicker(Context context, int initialYear, int initialMonth, int initialDay) {
 
         // Creating datePicker dialog object
         // It requires context and listener that is used when a date is selected by the user.
@@ -145,7 +164,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         //Call show() to simply show the dialog
         datePickerDialog.show();
 
-    }
+    }*/
 
     private void updateTodo(ContentValues cv, int idString) {
         database.update(TodoOpenHelper.TODO_TABLE_NAME, cv, TodoOpenHelper.TODO_ID + " = " + idString, null);
@@ -159,14 +178,6 @@ public class TodoDetailActivity extends AppCompatActivity {
     private void fillEditTextViews(int id) {
         Cursor cursor = database.query(TodoOpenHelper.TODO_TABLE_NAME, null, TodoOpenHelper.TODO_ID + " = " + id
                 , null, null, null,null);
-        /*Cursor cursor = database.query(TodoOpenHelper.TODO_TABLE_NAME, null, null, null, null, null, null);
-        while (cursor.moveToNext())
-        {
-            if (cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_ID)) == id)
-            {
-                break;
-            }
-        }*/
         cursor.moveToNext();
         titleText.setText(cursor.getString(cursor.getColumnIndex(TodoOpenHelper.TODO_TITLE)));
         categoryText.setText(cursor.getString(cursor.getColumnIndex(TodoOpenHelper.TODO_CATEGORY)));
@@ -180,9 +191,15 @@ public class TodoDetailActivity extends AppCompatActivity {
         deadlineTime = cursor.getLong(cursor.getColumnIndex(TodoOpenHelper.TODO_DEADLINE));
         if (deadlineTime != 0)
         {
-            date = new Date(deadlineTime);
+            /*date = new Date(deadlineTime);
             text = format.format(date);
-            deadlineText.setText("Deadline is " + text);
+            deadlineText.setText("Deadline is " + text);*/
+            Calendar mCalendar = Calendar.getInstance();
+            mCalendar.setTimeInMillis(deadlineTime);
+            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("hh:mm a");
+            String time = mSimpleDateFormat.format(mCalendar.getTime());
+            deadlineText.setText("Deadline : " + mCalendar.get(Calendar.DAY_OF_MONTH) + "/" + mCalendar.get(Calendar.MONTH)
+                    + "/" + mCalendar.get(Calendar.YEAR) + " at " + time);
         }
         cursor.close();
     }
@@ -193,10 +210,11 @@ public class TodoDetailActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void insertTodo(ContentValues cv)
+    public long insertTodo(ContentValues cv)
     {
-        database.insert(TodoOpenHelper.TODO_TABLE_NAME, null, cv);
+        long mUniqueId = database.insert(TodoOpenHelper.TODO_TABLE_NAME, null, cv);
         setResult(RESULT_OK);
+        return mUniqueId;
     }
 
     @Override
@@ -209,8 +227,25 @@ public class TodoDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.set_alarm)
         {
-
+            Intent intent = new Intent(this, SetAlarm.class);
+            intent.putExtra(IntentConstants.TITLE, titleText.getText());
+            intent.putExtra(IntentConstants.DEADLINE, deadlineTime);
+            startActivityForResult(intent, IntentConstants.SET_ALARM);
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == IntentConstants.SET_ALARM && resultCode == RESULT_OK)
+        {
+            deadlineTime = data.getLongExtra(IntentConstants.ALARM_TIME_IN_EPOCH, 0);
+            mCalendar = Calendar.getInstance();
+            mCalendar.setTimeInMillis(deadlineTime);
+            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("hh:mm a");
+            String time = mSimpleDateFormat.format(mCalendar.getTime());
+            deadlineText.setText("Deadline : " + mCalendar.get(Calendar.DAY_OF_MONTH) + "/" + mCalendar.get(Calendar.MONTH)
+                    + "/" + mCalendar.get(Calendar.YEAR) + " at " + time);
+        }
     }
 }

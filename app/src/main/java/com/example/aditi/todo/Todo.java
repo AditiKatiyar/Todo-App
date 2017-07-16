@@ -1,18 +1,21 @@
 package com.example.aditi.todo;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Created by Aditi on 6/28/2017.
  */
 
-public class Todo {
+public class Todo implements Serializable {
     int id;
     String title;
     String category;
     String description;
     long date;
     long deadline;
+    boolean done;
+    boolean deadlinePassed;
 
     public Todo(String title, String category, String description, int id, long date, long deadline) {
         this.title = title;

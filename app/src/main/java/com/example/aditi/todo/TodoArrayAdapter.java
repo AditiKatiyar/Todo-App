@@ -30,11 +30,19 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
 
 
     public TodoArrayAdapter(@NonNull Context context, ArrayList<Todo> todoArrayList) {
-        super(context, 0, todoArrayList);
+        super(context, 0);
         this.todoArrayList = todoArrayList;
         this.context = context;
-        extraTodoList = new ArrayList<>();
-        extraTodoList.addAll(todoArrayList);
+        /*extraTodoList = new ArrayList<>();
+        extraTodoList.addAll(todoArrayList);*/
+
+        extraTodoList = todoArrayList;
+        getFilter();
+    }
+
+    @Override
+    public int getCount() {
+        return todoArrayList.size();
     }
 
     static class TodoViewHolder {
@@ -86,11 +94,14 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
     // to filter todos
     public void filter(String searchText)
     {
-        todoArrayList.clear();
+        //todoArrayList.clear();
+
+        todoArrayList = new ArrayList<>();
         if (searchText.length() == 0)
         {
-            todoArrayList.addAll(extraTodoList);
-            Log.i("filter ", "after add all");
+            /*todoArrayList.addAll(extraTodoList);
+            Log.i("filter ", "after add all");*/
+            todoArrayList = extraTodoList;
         }
         else
         {

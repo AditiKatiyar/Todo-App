@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:theme="@style/toolbarTheme"
-            android:id="@+id/toolbar">
+            android:id="@+id/toolbar"
+            app:titleTextColor="@color/white">
 
         </android.support.v7.widget.Toolbar>
 
@@ -79,7 +80,6 @@
         android:layout_height="50dp"
         android:id="@+id/deadlineText"
         android:background="@drawable/textview_modified_states"
-        android:hint="Deadline"
         android:padding="10dp"
         android:layout_margin="10dp"
         android:textSize="18sp"
