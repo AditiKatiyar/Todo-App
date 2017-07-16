@@ -19,147 +19,167 @@
             android:id="@+id/toolbar"
             app:titleTextColor="@color/white">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="24dp"
+                android:gravity="center_vertical"
+                android:id="@+id/header"/>
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <!--<FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">-->
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp"
-                android:gravity="bottom">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="30dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/image"
-                    android:layout_marginLeft="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="bottom">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/image"
+                        android:layout_marginLeft="10dp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:id="@+id/statusText"
+                        android:textSize="15dp"
+                        android:gravity="left"
+                        android:paddingLeft="20dp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:gravity="right"
+                        android:paddingRight="20dp"
+                        android:id="@+id/dateText"
+                        android:textColor="@color/colorAccent"/>
+
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:id="@+id/statusText"
-                    android:textSize="15dp"
-                    android:gravity="left"
-                    android:paddingLeft="20dp"/>
+                    android:text="Title :"
+                    android:paddingLeft="20dp"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/lightGrey"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/titleText"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext_modified_states"
+                    android:padding="10dp"
+                    android:textColor="@color/lightGrey"
+                    />
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:gravity="right"
-                    android:paddingRight="20dp"
-                    android:id="@+id/dateText"
-                    android:textColor="@color/colorAccent"/>
+                    android:text="Category :"
+                    android:paddingLeft="20dp"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/lightGrey"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/categoryText"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edittext_modified_states"
+                    android:padding="10dp"
+                    android:textColor="@color/lightGrey"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Description :"
+                    android:paddingLeft="20dp"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/lightGrey"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/descriptionText"
+                    android:layout_gravity="top|left"
+                    android:scrollbars="vertical"
+                    android:inputType="textMultiLine"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edittext_modified_states"
+                    android:padding="10dp"
+                    android:lines="4"
+                    android:minLines="1"
+                    android:gravity="top|left"
+                    android:maxLines="10"
+                    android:textColor="@color/lightGrey"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/deadlineText"
+                    android:background="@drawable/textview_modified_states"
+                    android:padding="10dp"
+                    android:layout_margin="10dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/lightGrey"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="bottom">
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OK"
+                        android:textSize="20dp"
+                        android:id="@+id/OKbutton"
+                        android:background="@drawable/button_image"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Title :"
-                android:paddingLeft="20dp"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/lightGrey"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/titleText"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_modified_states"
-                android:padding="10dp"
-                android:textColor="@color/lightGrey"
-                />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Category :"
-                android:paddingLeft="20dp"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/lightGrey"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/categoryText"
-                android:layout_margin="10dp"
-                android:background="@drawable/edittext_modified_states"
-                android:padding="10dp"
-                android:textColor="@color/lightGrey"
-                />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Description :"
-                android:paddingLeft="20dp"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/lightGrey"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/descriptionText"
-                android:layout_gravity="top|left"
-                android:scrollbars="vertical"
-                android:inputType="textMultiLine"
-                android:layout_margin="10dp"
-                android:background="@drawable/edittext_modified_states"
-                android:padding="10dp"
-                android:lines="4"
-                android:minLines="1"
-                android:gravity="top|left"
-                android:maxLines="10"
-                android:textColor="@color/lightGrey"/>
+        <!--</FrameLayout>-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/deadlineText"
-                android:background="@drawable/textview_modified_states"
-                android:padding="10dp"
-                android:layout_margin="10dp"
-                android:textSize="18sp"
-                android:textColor="@color/lightGrey"/>
 
-        </LinearLayout>
 
     </ScrollView>
 
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="bottom">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OK"
-            android:textSize="20dp"
-            android:id="@+id/OKbutton"
-            android:background="@drawable/button_image"
-            android:textColor="@color/white"
-            android:layout_marginBottom="20dp"/>
-    </LinearLayout>
+
 
 
 </LinearLayout>

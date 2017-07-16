@@ -38,6 +38,7 @@ public class TodoDetailActivity extends AppCompatActivity {
     TextView dateText;
     TextView statusText;
     ImageView imageView;
+    TextView header;
     TodoOpenHelper todoOpenHelper;
     SQLiteDatabase database;
     String Position;
@@ -60,6 +61,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         deadlineText = (TextView) findViewById(R.id.deadlineText);
         imageView = (ImageView) findViewById(R.id.image);
         statusText = (TextView) findViewById(R.id.statusText);
+        header = (TextView) findViewById(R.id.header);
         /*deadlineText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +89,10 @@ public class TodoDetailActivity extends AppCompatActivity {
         {
             fillEditTextViews(idString);
             uniqueId = idString;
+        }
+        else
+        {
+            header.setText("Add New Todo");
         }
 
         OKButton.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +197,9 @@ public class TodoDetailActivity extends AppCompatActivity {
         Cursor cursor = database.query(TodoOpenHelper.TODO_TABLE_NAME, null, TodoOpenHelper.TODO_ID + " = " + id
                 , null, null, null,null);
         cursor.moveToNext();
-        titleText.setText(cursor.getString(cursor.getColumnIndex(TodoOpenHelper.TODO_TITLE)));
+        String title = cursor.getString(cursor.getColumnIndex(TodoOpenHelper.TODO_TITLE));
+        titleText.setText(title);
+        header.setText("Edit '" + title + "'");
         categoryText.setText(cursor.getString(cursor.getColumnIndex(TodoOpenHelper.TODO_CATEGORY)));
         descriptionText.setText(cursor.getString(cursor.getColumnIndex(TodoOpenHelper.TODO_DESCRIPTION)));
         long epochTime = cursor.getLong(cursor.getColumnIndex(TodoOpenHelper.TODO_DATE));
