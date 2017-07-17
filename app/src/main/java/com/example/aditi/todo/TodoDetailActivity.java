@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -223,19 +224,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         }
         deadlinePassed = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_DEADLINE_PASSED));
         done = cursor.getInt(cursor.getColumnIndex(TodoOpenHelper.TODO_DONE));
-        if (deadlinePassed == 1)
-        {
-            if (done == 1)
-            {
-                statusText.setText("Done!");
-                imageView.setBackgroundResource(R.drawable.tick);
-            }
-            else
-            {
-                statusText.setText("Not Done!");
-                imageView.setBackgroundResource(R.drawable.cross);
-            }
-        }
+        updateDoneView(deadlinePassed, done);
         cursor.close();
     }
 
@@ -270,17 +259,15 @@ public class TodoDetailActivity extends AppCompatActivity {
         }
         else if (itemId == R.id.mark_as_done)
         {
-            imageView.setBackgroundResource(R.drawable.tick);
-            statusText.setText("Done!");
             done = 1;
             deadlinePassed = 1;
+            updateDoneView(deadlinePassed, done);
         }
         else if (itemId == R.id.mark_as_not_done)
         {
-            imageView.setBackgroundResource(R.drawable.cross);
-            statusText.setText("Not Done!");
             done = 0;
             deadlinePassed = 1;
+            updateDoneView(deadlinePassed, done);
         }
         return true;
     }
@@ -297,6 +284,31 @@ public class TodoDetailActivity extends AppCompatActivity {
             deadlineText.setText("Deadline : " + mCalendar.get(Calendar.DAY_OF_MONTH) + "/" + mCalendar.get(Calendar.MONTH)
                     + "/" + mCalendar.get(Calendar.YEAR) + " at " + time);
             alarmSet = true;
+            deadlinePassed = 0;
+            done = 0;
+            updateDoneView(deadlinePassed, done);
+        }
+    }
+
+    private void updateDoneView(int deadlinePassed, int done)
+    {
+        if (deadlinePassed == 1)
+        {
+            if (done == 1)
+            {
+                imageView.setBackgroundResource(R.drawable.tick);
+                statusText.setText("Done!");
+            }
+            else
+            {
+                imageView.setBackgroundResource(R.drawable.cross);
+                statusText.setText("Not Done!");
+            }
+        }
+        else
+        {
+            statusText.setText("");
+            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.offWhite));
         }
     }
 }

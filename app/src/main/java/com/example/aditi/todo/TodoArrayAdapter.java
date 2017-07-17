@@ -3,6 +3,7 @@ package com.example.aditi.todo;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,7 +107,7 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
         }
         else
         {
-            todoViewHolder.imageView.setMaxWidth(0);
+            todoViewHolder.imageView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
         }
 
         return convertView;

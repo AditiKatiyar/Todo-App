@@ -75,7 +75,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.notification)
                 .setContentTitle("My Todos : Reminder!")
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setContentText(todo.title + " (" + todo.category + ")")
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
